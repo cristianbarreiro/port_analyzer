@@ -40,7 +40,7 @@ function Get-PortAnalyzerSnapshot {
 
 function Get-PortAnalyzerFindings {
     [CmdletBinding()]
-    param([Parameter(Mandatory)][object[]]$Endpoints)
+    param([Parameter(Mandatory)][AllowEmptyCollection()][object[]]$Endpoints)
     $hints = @{ 21='FTP'; 23='Telnet'; 135='RPC Endpoint Mapper'; 139='NetBIOS'; 445='SMB'; 3389='Remote Desktop'; 5985='WinRM HTTP' }
     foreach ($endpoint in $Endpoints) {
         if ($endpoint.Protocol -eq 'TCP' -and $endpoint.State -eq 'Listen' -and $hints.ContainsKey([int]$endpoint.LocalPort)) {
