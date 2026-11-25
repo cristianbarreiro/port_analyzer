@@ -32,8 +32,8 @@ function Get-PortAnalyzerSnapshot {
             try { $cache[$pidValue] = (Get-Process -Id $pidValue -ErrorAction Stop).ProcessName }
             catch { $cache[$pidValue] = 'Unknown' }
         }
-        $endpoint | Add-Member ProcessName $cache[$pidValue] -Force
-        $endpoint | Add-Member BindScope (Get-BindScope -Address $endpoint.LocalAddress) -Force
+        $endpoint | Add-Member -NotePropertyName ProcessName -NotePropertyValue $cache[$pidValue] -Force
+        $endpoint | Add-Member -NotePropertyName BindScope -NotePropertyValue (Get-BindScope -Address $endpoint.LocalAddress) -Force
     }
     [pscustomobject]@{ CollectedAt=Get-Date; Tcp=@($tcp); Udp=@($udp); Endpoints=@($all); Errors=@($errors) }
 }
