@@ -1,33 +1,40 @@
 # Port Analyzer
 
-Real-time, read-only Windows network endpoint monitor built with PowerShell 7.
-
-> Status: foundation in progress. The project distinguishes local socket state from network exposure; a listening port is not, by itself, proof of remote reachability or vulnerability.
-
-## Goals
-
-- Show TCP listeners, established TCP connections, and UDP endpoints in a live terminal dashboard.
-- Associate endpoints with owning processes when permissions and platform data allow.
-- Explain bind scope and local exposure without overstating internet reachability.
-- Provide conservative, evidence-based security findings with actionable remediation.
-- Export normalized observations as JSON.
-
-## Safety principles
-
-- Read-only by default: never changes firewall rules, services, routes, registry, or network configuration.
-- No implicit remote scanning, packet payload capture, credential collection, or exploit attempts.
-- A port number alone never establishes that a service is vulnerable.
-- Missing permissions or data are reported as unknown, not silently treated as safe.
-
-## Requirements
-
-- Windows 10/11 or Windows Server with supported networking cmdlets.
-- PowerShell 7.4 or later (Windows PowerShell 5.1 compatibility is not a goal for the initial MVP).
+Real-time, read-only Windows network endpoint monitor built with PowerShell 7.4+.
 
 ## Quick start
 
-The live dashboard is being implemented. See [ROADMAP.md](ROADMAP.md) for the initial milestones.
+Open PowerShell 7 in this directory and run:
+
+```powershell
+.\Start-PortAnalyzer.ps1
+```
+
+Useful options:
+
+```powershell
+.\Start-PortAnalyzer.ps1 -RefreshSeconds 1
+.\Start-PortAnalyzer.ps1 -Once
+.\Start-PortAnalyzer.ps1 -Once -Json
+```
+
+The dashboard displays TCP listeners, TCP connections, UDP endpoints, owning process names where available, bind scope, and conservative review hints.
+
+## Interpretation and safety
+
+- Read-only: it does not modify firewall rules, services, routes, registry, or network settings.
+- TCP LISTEN is local socket state, not proof of remote or internet reachability.
+- UDP endpoints are bindings, not TCP listeners.
+- Port-number heuristics are review hints, not vulnerability detection or CVE confirmation.
+- Firewall, NAT, VPN, routing, and upstream controls are not yet correlated.
+- Missing permissions or process races may result in unknown process attribution.
+
+See [AGENTS.md](AGENTS.md), [SECURITY.md](SECURITY.md), [architecture](docs/architecture/overview.md), and [roadmap](ROADMAP.md).
+
+## Requirements
+
+Windows with NetTCPIP cmdlets and PowerShell 7.4 or later. Automated tests run on Windows in GitHub Actions.
 
 ## License
 
-MIT (see [LICENSE](LICENSE)).
+MIT.

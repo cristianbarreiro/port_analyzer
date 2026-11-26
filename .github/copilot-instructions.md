@@ -1,0 +1,1 @@
+Follow AGENTS.md. Keep the app read-only. Distinguish TCP from UDP. Never equate a listening port with a vulnerability. Add Pester tests. Do not add remote scanning, exploit code, payload capture, or automatic remediation.
