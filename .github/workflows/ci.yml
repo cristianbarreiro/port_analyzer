@@ -23,6 +23,8 @@ jobs:
       - name: Run PSScriptAnalyzer
         shell: pwsh
         run: |
-          $results = Invoke-ScriptAnalyzer -Path ./src, ./Start-PortAnalyzer.ps1 -Recurse -Settings ./PSScriptAnalyzerSettings.psd1
+          $results = foreach ($path in './src', './Start-PortAnalyzer.ps1') {
+            Invoke-ScriptAnalyzer -Path $path -Recurse -Settings ./PSScriptAnalyzerSettings.psd1
+          }
           $results | Format-Table -AutoSize
           if ($results | Where-Object Severity -eq 'Error') { throw 'PSScriptAnalyzer reported errors.' }
