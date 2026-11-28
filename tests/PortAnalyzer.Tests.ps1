@@ -78,7 +78,7 @@ Describe 'Get-PortAnalyzerProcessName' {
         It 'handles PID 0 without attempting process lookup' {
             Mock Get-Process { throw 'Get-Process should not be called for PID 0.' }
             Get-PortAnalyzerProcessName -ProcessId 0 | Should -Be 'System Idle Process'
-            Should -Not -Invoke Get-Process
+            Should -Invoke Get-Process -Times 0 -Exactly
         }
 
         It 'returns Unknown when a process exits or access is denied' {
