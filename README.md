@@ -26,8 +26,10 @@ The dashboard displays TCP listeners, TCP connections, UDP endpoints, owning pro
 - TCP LISTEN is local socket state, not proof of remote or internet reachability.
 - UDP endpoints are bindings, not TCP listeners.
 - Port-number heuristics are review hints, not vulnerability detection or CVE confirmation.
+- Wildcard, loopback, specific, and unparseable addresses are classified separately; unparseable values remain **Unknown**.
+- PID 0 is identified as the System Idle Process without attempting a process lookup. Other process attribution is best effort and may be **Unknown** if a process exits or access is denied.
 - Firewall, NAT, VPN, routing, and upstream controls are not yet correlated.
-- Missing permissions or process races may result in unknown process attribution.
+- An empty result or missing data is not proof that a host is secure.
 
 See [AGENTS.md](AGENTS.md), [SECURITY.md](SECURITY.md), [architecture](docs/architecture/overview.md), and [roadmap](ROADMAP.md).
 
